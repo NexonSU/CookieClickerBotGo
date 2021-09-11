@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/NexonSU/CookieClickerBotGo/hotkeys"
+	"github.com/NexonSU/CookieClickerBotGo/app/hotkeys"
 
 	"golang.design/x/mainthread"
 )

@@ -2,7 +2,11 @@ module github.com/NexonSU/CookieClickerBotGo
 
 go 1.17
 
-require github.com/go-vgo/robotgo v0.99.9
+require (
+	github.com/go-vgo/robotgo v0.99.9
+	golang.design/x/hotkey v0.2.0
+	golang.design/x/mainthread v0.2.1
+)
 
 require (
 	github.com/StackExchange/wmi v1.2.1 // indirect
@@ -18,8 +22,6 @@ require (
 	github.com/vcaesar/gops v0.21.1 // indirect
 	github.com/vcaesar/imgo v0.20.0 // indirect
 	github.com/vcaesar/tt v0.11.0 // indirect
-	golang.design/x/hotkey v0.2.0 // indirect
-	golang.design/x/mainthread v0.2.1 // indirect
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d // indirect
 	golang.org/x/sys v0.0.0-20210820121016-41cdb8703e55 // indirect
 )
