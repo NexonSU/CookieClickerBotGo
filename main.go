@@ -64,13 +64,14 @@ func BindHotkeys() {
 }
 
 func Clicker() {
+	posX := 0
+	posY := 0
+	width := 0
+	height := 0
 	for {
-		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
 		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && clickerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
-			x := int(float64(width)*0.155) + posX
-			y := int(float64(height)*0.42) + posY
-			robotgo.MoveMouse(x, y)
+			robotgo.MoveMouse(int(float64(width)*0.155)+posX, int(float64(height)*0.42)+posY)
 			robotgo.MouseClick("left")
 			time.Sleep(2 * time.Millisecond)
 		} else {
@@ -80,15 +81,23 @@ func Clicker() {
 }
 
 func GoldClicker() {
+	posX := 0
+	posY := 0
+	width := 0
+	height := 0
+	fx := 0
+	fy := 0
+	windowScreen := robotgo.CaptureScreen()
 	for {
-		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
 		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && goldClickerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			windowScreen := robotgo.CaptureScreen(posX, posY, width, height)
-			fx, fy := robotgo.FindPic("goldCookie.png", windowScreen, 0.1)
+			windowScreen = robotgo.CaptureScreen(posX, posY, width, height)
+			fx, fy = robotgo.FindPic("goldCookie.png", windowScreen, 0.1)
 			if fx != -1 && fy != -1 {
 				robotgo.MoveMouse(fx+posX, fy+posY)
 				robotgo.MouseClick("left")
 			}
+			robotgo.FreeBitmap(windowScreen)
 			time.Sleep(500 * time.Millisecond)
 		} else {
 			time.Sleep(1000 * time.Millisecond)
@@ -97,10 +106,16 @@ func GoldClicker() {
 }
 
 func Buyer() {
+	posX := 0
+	posY := 0
+	width := 0
+	height := 0
+	fx := 0
+	fy := 0
 	for {
-		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
 		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && buyerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			fx, fy := robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY, width/4, height, 0.1)
+			fx, fy = robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY, width/4, height, 0.1)
 			if fx != -1 && fy != -1 {
 				robotgo.MoveMouse(fx+posX+3*width/4, fy+posY)
 				robotgo.MouseClick("left")
