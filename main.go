@@ -115,9 +115,9 @@ func Buyer() {
 	for {
 		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
 		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && buyerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			fx, fy = robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY+height/2, width/4, height/2, 0.1)
+			fx, fy = robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY, width/4, height)
 			if fx != -1 && fy != -1 {
-				robotgo.MoveMouse(fx+posX+3*width/4, fy+posY+height/2)
+				robotgo.MoveMouse(fx+posX+3*width/4, fy+posY)
 				robotgo.MouseClick("left")
 			}
 			time.Sleep(500 * time.Millisecond)
