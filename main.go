@@ -12,7 +12,7 @@ import (
 
 var clickerEnabled = true
 var picClickerEnabled = true
-var buyerEnabled = true
+var buyerEnabled = false
 
 func main() {
 	go Clicker()
