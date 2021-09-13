@@ -1,9 +1,9 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/go-vgo/robotgo"
@@ -102,12 +102,12 @@ func PicClicker() {
 			continue
 		}
 		windowScreen := robotgo.CaptureScreen(posX, posY, width, height)
-		files, err := ioutil.ReadDir("files")
+		files, err := filepath.Glob("files/*.png")
 		if err != nil {
 			log.Println(err)
 		}
 		for _, f := range files {
-			fx, fy := robotgo.FindPic("files/"+f.Name(), windowScreen, 0.1)
+			fx, fy := robotgo.FindPic(f, windowScreen, 0.1)
 			if fx == -1 && fy == -1 {
 				continue
 			}
