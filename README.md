@@ -9,8 +9,9 @@ Ported from https://github.com/NexonSU/CookieClickerBot.
 
 # How to use PicClicker
 1) Screenshot desired object.
-2) Save it as {objectname}.png in "files" folder.
-! [files1] (https://raw.githubusercontent.com/NexonSU/CookieClickerBotGo/main/README/files1.png) ! [files2] (https://raw.githubusercontent.com/NexonSU/CookieClickerBotGo/main/README/files2.png)
+2) Save it as {objectname}.png in "files" folder.  
+![files1](https://raw.githubusercontent.com/NexonSU/CookieClickerBotGo/main/README/files1.png) 
+![files2](https://raw.githubusercontent.com/NexonSU/CookieClickerBotGo/main/README/files2.png)
 3) If bot misclicking cookies, than change DPI settings in compatibility tab to "Application".
 
 # Hotkeys
