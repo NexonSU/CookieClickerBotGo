@@ -1,8 +1,9 @@
 package main
 
 import (
+	"io/ioutil"
+	"log"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/go-vgo/robotgo"
@@ -10,18 +11,14 @@ import (
 )
 
 var clickerEnabled = true
-var goldClickerEnabled = true
+var picClickerEnabled = true
 var buyerEnabled = true
 
 func main() {
-	go BindHotkeys()
 	go Clicker()
-	go GoldClicker()
+	go PicClicker()
 	go Buyer()
-
-	for {
-		time.Sleep(1000 * time.Millisecond)
-	}
+	BindHotkeys()
 }
 
 func BindHotkeys() {
@@ -35,13 +32,13 @@ func BindHotkeys() {
 		}
 	})
 
-	robotgo.EventHook(hook.KeyDown, []string{"g", "ctrl", "shift"}, func(e hook.Event) {
-		if goldClickerEnabled {
-			goldClickerEnabled = false
-			println("GoldClicker disabled.")
+	robotgo.EventHook(hook.KeyDown, []string{"p", "ctrl", "shift"}, func(e hook.Event) {
+		if picClickerEnabled {
+			picClickerEnabled = false
+			println("PicClicker disabled.")
 		} else {
-			goldClickerEnabled = true
-			println("GoldClicker enabled.")
+			picClickerEnabled = true
+			println("PicClicker enabled.")
 		}
 	})
 
@@ -64,65 +61,85 @@ func BindHotkeys() {
 }
 
 func Clicker() {
-	posX := 0
-	posY := 0
-	width := 0
-	height := 0
 	for {
-		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
-		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && clickerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			robotgo.MoveMouse(int(float64(width)*0.155)+posX, int(float64(height)*0.42)+posY)
-			robotgo.MouseClick("left")
-			time.Sleep(2 * time.Millisecond)
-		} else {
-			time.Sleep(1000 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
+		if !clickerEnabled {
+			continue
+		}
+		activeProcess, err := robotgo.FindName(robotgo.GetPID())
+		if err != nil {
+			continue
+		}
+		if activeProcess != "Cookie Clicker.exe" {
+			continue
+		}
+		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		if posX == 0 && posY == 0 && width == 0 && height == 0 {
+			continue
+		}
+		for i := 0; i < 10; i++ {
+			robotgo.MoveClick(int(float64(width)*0.155)+posX, int(float64(height)*0.42)+posY)
+			time.Sleep(10 * time.Millisecond)
 		}
 	}
 }
 
-func GoldClicker() {
-	posX := 0
-	posY := 0
-	width := 0
-	height := 0
-	fx := 0
-	fy := 0
-	windowScreen := robotgo.CaptureScreen()
+func PicClicker() {
 	for {
-		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
-		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && goldClickerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			windowScreen = robotgo.CaptureScreen(posX, posY, width, height)
-			fx, fy = robotgo.FindPic("goldCookie.png", windowScreen, 0.1)
-			if fx != -1 && fy != -1 {
-				robotgo.MoveMouse(fx+posX, fy+posY)
-				robotgo.MouseClick("left")
-			}
-			robotgo.FreeBitmap(windowScreen)
-			time.Sleep(500 * time.Millisecond)
-		} else {
-			time.Sleep(1000 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
+		if !picClickerEnabled {
+			continue
 		}
+		activeProcess, err := robotgo.FindName(robotgo.GetPID())
+		if err != nil {
+			continue
+		}
+		if activeProcess != "Cookie Clicker.exe" {
+			continue
+		}
+		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		if posX == 0 && posY == 0 && width == 0 && height == 0 {
+			continue
+		}
+		windowScreen := robotgo.CaptureScreen(posX, posY, width, height)
+		files, err := ioutil.ReadDir("files")
+		if err != nil {
+			log.Println(err)
+		}
+		for _, f := range files {
+			fx, fy := robotgo.FindPic("files/"+f.Name(), windowScreen, 0.1)
+			if fx == -1 && fy == -1 {
+				continue
+			}
+			robotgo.MoveClick(fx+posX, fy+posY)
+		}
+		robotgo.FreeBitmap(windowScreen)
+
 	}
 }
 
 func Buyer() {
-	posX := 0
-	posY := 0
-	width := 0
-	height := 0
-	fx := 0
-	fy := 0
 	for {
-		posX, posY, width, height = robotgo.GetBounds(robotgo.GetPID())
-		if strings.Contains(robotgo.GetTitle(), "Cookie Clicker") && buyerEnabled && posX != 0 && posY != 0 && width != 0 && height != 0 {
-			fx, fy = robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY, width/4, height)
-			if fx != -1 && fy != -1 {
-				robotgo.MoveMouse(fx+posX+3*width/4, fy+posY)
-				robotgo.MouseClick("left")
-			}
-			time.Sleep(500 * time.Millisecond)
-		} else {
-			time.Sleep(1000 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
+		if !buyerEnabled {
+			continue
 		}
+		activeProcess, err := robotgo.FindName(robotgo.GetPID())
+		if err != nil {
+			continue
+		}
+		if activeProcess != "Cookie Clicker.exe" {
+			continue
+		}
+		posX, posY, width, height := robotgo.GetBounds(robotgo.GetPID())
+		if posX == 0 && posY == 0 && width == 0 && height == 0 {
+			continue
+		}
+		fx, fy := robotgo.FindColorCS(robotgo.CHex(robotgo.RgbToHex(102, 255, 102)), posX+3*width/4, posY, width/4, height)
+		if fx == -1 && fy == -1 {
+			continue
+		}
+		robotgo.MoveMouse(fx+posX+3*width/4, fy+posY)
+		robotgo.MouseClick("left")
 	}
 }
