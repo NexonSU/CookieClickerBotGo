@@ -10,8 +10,8 @@ Ported from https://github.com/NexonSU/CookieClickerBot.
 * If bot can't misclicking cookies, than change DPI settings in compatibility tab to "Application".
 # Hotkeys
 ```
-CTRL+SHIFT+C - toogle cookie clicker
-CTRL+SHIFT+G - toogle goldcookier clicker
-CTRL+SHIFT+B - toogle auto buy
+CTRL+SHIFT+C - toogle Clicker
+CTRL+SHIFT+P - toogle PicClicker
+CTRL+SHIFT+B - toogle Buyer
 ESC - exit
 ```
